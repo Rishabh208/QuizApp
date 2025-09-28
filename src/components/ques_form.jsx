@@ -34,6 +34,13 @@ export const QuesForm = () => {
   })
 
   const onSubmit = (values) => {
+    const allAnswered = mcqData.every(q => values[q.id]);
+    
+    if (!allAnswered) {
+      alert("Please answer all questions before submitting!");
+      return;
+    }
+
     let score = 0
     mcqData.forEach((q) => {
       if (values[q.id] === q.answer) score++
@@ -42,11 +49,13 @@ export const QuesForm = () => {
     console.log("Answers:", values)
   }
 
-  const goNext = () => {
+  const goNext = (e) => {
+    e.preventDefault()
     if(currentQ < mcqData.length-1) setCurrentQ(currentQ + 1);
   }
 
-  const goPrev = () => {
+  const goPrev = (e) => {
+    e.preventDefault()
     if(currentQ > 0) setCurrentQ(currentQ - 1);
   }
 
@@ -59,25 +68,49 @@ export const QuesForm = () => {
             name={mcqData[currentQ].id.toString()}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-bold">{q.question}</FormLabel>
+                <FormLabel className="font-bold">
+                  Q{currentQ + 1}. {mcqData[currentQ].question}
+                </FormLabel>
                 <FormControl>
                   <RadioGroup
                     value={field.value}
                     onValueChange={field.onChange}
                   >
-                    {q.options.map((option, idx) => (
-                      <div key={idx} className="flex items-center space-x-2">
-                        <RadioGroupItem value={option} id={`${q.id}-${idx}`} />
-                        <label htmlFor={`${q.id}-${idx}`}>{option}</label>
-                      </div>
-                    ))}
+                    {mcqData[currentQ].options.map((option, idx) => (
+                    <div key={idx} className="flex items-center space-x-2">
+                      <RadioGroupItem
+                        value={option}
+                        id={`${mcqData[currentQ].id}-${idx}`}
+                      />
+                      <label htmlFor={`${mcqData[currentQ].id}-${idx}`}>
+                        {option}
+                      </label>
+                    </div>
+                  ))}
                   </RadioGroup>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-        <Button type="submit">Submit Quiz</Button>
+        <div className="flex justify-between">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={goPrev}
+            disabled={currentQ === 0}
+          >
+            Previous
+          </Button>
+
+          {currentQ === mcqData.length - 1 ? (
+            <Button type="submit">Submit Quiz</Button>
+          ) : (
+            <Button type="button" onClick={goNext}>
+              Next
+            </Button>
+          )}
+        </div>
       </form>
     </Form>
   )
