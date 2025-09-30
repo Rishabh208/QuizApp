@@ -54,7 +54,7 @@ class QuizAI:
         try:
             questions_json = json.loads(questions_str)
         except json.JSONDecodeError:
-            print("⚠️ Model did not return valid JSON, falling back to empty list.")
+            print("Model did not return valid JSON, falling back to empty list.")
             questions_json = {"questions": []}
         return questions_json
 

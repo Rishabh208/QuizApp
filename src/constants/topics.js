@@ -9,10 +9,10 @@ export const topics = [
     },
     {
         id:3,
-        title:"Topic 3",
+        title:"Health",
     },
     {
         id:4,
-        title:"Topic 4"
+        title:"Health Tips"
     }
 ]
