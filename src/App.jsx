@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Home } from './components/home';
+import { QuesForm } from './components/ques_form';
 
 function App() {
 
@@ -7,7 +8,8 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" Component={Home} />
+          <Route path="/" element={<Home />} />
+          <Route path="/:title" element={<QuesForm />} />
         </Routes>
       </Router>
     </>

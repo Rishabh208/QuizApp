@@ -1,8 +1,10 @@
 import { topics } from "@/constants/topics"
 import { Button } from "@/components/ui/button"
 import { QuesForm } from "@/components/ques_form"
+import { Link } from 'react-router-dom';
 
 export const Home = () => {
+
     return (
         <>
             <div className="w-screen h-screen flex flex-col justify-center items-center">
@@ -12,16 +14,17 @@ export const Home = () => {
                         topics?.map((topic, index) => {
                             return (
                                 <li key={index}>
+                                <Link to={`/${topic.title}`}>
                                     <Button variant="destructive">
                                         {topic.title}
                                     </Button>
+                                </Link>
                                 </li>
                             )
                         })
                     }
                 </ul>
             </div>
-            <QuesForm />
         </>
     )
 }
